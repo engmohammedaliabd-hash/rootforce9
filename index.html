@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>CyberScope | Unified Lab</title>
+    <style>
+        :root { --c: #ff003c; --b: #020202; --n: #00f2ff; }
+        * { box-sizing: border-box; cursor: crosshair; }
+        body { background: var(--b); color: #fff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .p { position: relative; width: 700px; padding: 40px; background: rgba(10,10,10,0.95); border: 1px solid #222; border-left: 5px solid var(--c); box-shadow: 0 0 100px #000; overflow-y: auto; max-height: 95vh; }
+        h1 { text-align: center; letter-spacing: 8px; color: var(--c); text-shadow: 0 0 10px var(--c); font-size: 1.5rem; margin-bottom: 25px; }
+        .h { display: none; }
+        .r { background: #000; padding: 20px; border-right: 3px solid var(--c); margin: 15px 0; color: #888; font-size: 0.95rem; line-height: 1.8; text-align: justify; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #050505; border: 1px solid #222; color: var(--n); font-family: inherit; text-align: center; outline: none; }
+        button { width: 100%; padding: 18px; margin-top: 10px; background: rgba(255, 0, 60, 0.05); border: 1px solid var(--c); color: var(--c); cursor: pointer; font-weight: bold; letter-spacing: 5px; transition: 0.4s; }
+        button:hover { background: var(--c); color: #000; }
+        
+        /* قسم الفورينسيك المدمج */
+        .forensics-zone { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; }
+        .tag { color: var(--n); font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 10px; display: block; }
+        .img-preview { width: 100%; text-align: center; background: #080808; padding: 15px; border: 1px dashed #333; margin-top: 15px; }
+        .img-preview img { max-width: 100%; height: auto; border: 1px solid #222; opacity: 0.8; margin-bottom: 15px; }
+        .btn-dl { display: inline-block; padding: 10px 25px; border: 1px solid var(--n); color: var(--n); text-decoration: none; font-size: 0.8rem; transition: 0.3s; }
+        .btn-dl:hover { background: var(--n); color: #000; box-shadow: 0 0-15px var(--n); }
+    </style>
+</head>
+<body>
+
+    <div id="login_box" class="p">
+        <h1>CYBERSCOPE</h1>
+        <input type="text" id="usr" placeholder="ADMIN_ID" autocomplete="off">
+        <input type="password" id="psw" placeholder="SECRET_KEY" autocomplete="off">
+        <button onclick="do_login()">INIT_SESSION</button>
+    </div>
+
+    <div id="main_lab" class="p h">
+        <h1>INVESTIGATION_HUB</h1>
+
+        <div class="section">
+            <span class="tag">[PART_01: CULTURAL_RIDDLE]</span>
+            <div class="r">
+                "أقف في بغداد، مشطوراً إلى نصفين متطابقين. أحتضن الراية في قلبي، وقبتاي الزرقاوان تلامسان السماء. لست مجرد بناء... أنا دمعة المدينة."
+            </div>
+            <input type="text" id="flag_input" placeholder="ENTER_FLAG_HERE" oninput="check_flag()" autocomplete="off">
+        </div>
+
+        <div class="forensics-zone">
+            <span class="tag">[PART_02: DIGITAL_FORENSICS]</span>
+            <div class="r">
+                <strong>وصف التحدي:</strong> هناك ملف تم العثور عليه في ذاكرة الخادم المخترق. تشير البيانات إلى أن هناك "علم" مخفي داخل هذا الملف باستخدام تقنيات Steganography المتقدمة. عليك استخراج الدليل الرقمي.
+            </div>
+            <div class="img-preview">
+                <img src="challenge1.png" alt="Evidence Artifact">
+                <br>
+                <a href="challenge1.png" download class="btn-dl">DOWNLOAD_ARTIFACT_FILE</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="win_screen" style="position:fixed; inset:0; background:#000; z-index:9999; display:none; flex-direction:column; align-items:center; justify-content:center;">
+        <h1 style="font-size:4rem; color:#fff; text-shadow:3px 3px var(--c); animation: blink 0.1s infinite;">BREACH SUCCESS</h1>
+        <div style="color:var(--n); letter-spacing:10px;">MISSION ACCOMPLISHED</div>
+    </div>
+
+    <script>
+        const toHex = (s) => s.split('').map(c => c.charCodeAt(0).toString(16)).join('');
+
+        function do_login() {
+            const u = document.getElementById('usr').value.trim();
+            const p = document.getElementById('psw').value.trim();
+            if (toHex(u) === "73636f70655f61646d696e" && toHex(p) === "582d53636f70652d32303236") {
+                document.getElementById('login_box').classList.add('h');
+                document.getElementById('main_lab').classList.remove('h');
+            } else { alert("ACCESS_DENIED"); }
+        }
+
+        // الفحص التلقائي للفلاغ في نفس الصفحة
+        function check_flag() {
+            const val = document.getElementById('flag_input').value.trim();
+            // Flag: RootForce{X-Scope-2026_AlShaheed_1983}
+            if (toHex(val.split('').reverse().join('')) === "f723839315f646565686168536c415f363230322d65706f63532d587b6563726f46746f6f52") {
+                document.getElementById('main_lab').classList.add('h');
+                document.getElementById('win_screen').style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
