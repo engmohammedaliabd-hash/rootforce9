@@ -49,6 +49,13 @@
             <div class="r">
                 <strong>وصف التحدي:</strong> هناك ملف تم العثور عليه في ذاكرة الخادم المخترق. تشير البيانات إلى أن هناك "علم" مخفي داخل هذا الملف باستخدام تقنيات Steganography المتقدمة. عليك استخراج الدليل الرقمي.
             </div>
+            <div class="uu">
+    <strong style="color:var(--c)">[REPORT: FRAGMENTED_DATA]</strong><br>
+    لقد تم تفتيت المفتاح النهائي إلى 5 نبضات برمجية:<br><br>
+    • النبضة الأولى تسكن في "جذور" الكود.<br>
+    • النبضتان الثانية والثالثة تسكنان في "ذاكرة" النصب (المكان والسنة).<br>
+    • النبضتان الرابعة والخامسة تسكنان في "أعماق" الصورة المرفقة.<br><br>
+    <span style="color:var(--n)">الصيغة: RootForce{password_place_year_PART4_PART5}</span></div>
             <div class="img-preview">
                 <img src="challenge1.png" alt="Evidence Artifact">
                 <br>
@@ -68,17 +75,16 @@
         function do_login() {
             const u = document.getElementById('usr').value.trim();
             const p = document.getElementById('psw').value.trim();
+            // hi rootforce the password and admin id  is encrypt hex here 
             if (toHex(u) === "73636f70655f61646d696e" && toHex(p) === "582d53636f70652d32303236") {
                 document.getElementById('login_box').classList.add('h');
                 document.getElementById('main_lab').classList.remove('h');
             } else { alert("ACCESS_DENIED"); }
         }
 
-        // الفحص التلقائي للفلاغ في نفس الصفحة
         function check_flag() {
             const val = document.getElementById('flag_input').value.trim();
-            // Flag: RootForce{X-Scope-2026_AlShaheed_1983}
-            if (toHex(val.split('').reverse().join('')) === "f723839315f646565686168536c415f363230322d65706f63532d587b6563726f46746f6f52") {
+            if (toHex(val.split('').reverse().join('')) === "f723839315f6465656861") {
                 document.getElementById('main_lab').classList.add('h');
                 document.getElementById('win_screen').style.display = 'flex';
             }
